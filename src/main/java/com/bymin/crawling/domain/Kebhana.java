@@ -1,4 +1,4 @@
-package com.bymin.crawling;
+package com.bymin.crawling.domain;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -17,3 +17,14 @@
 ![이미지](/images/daily.PNG){: width="100%"}
 
 
+### 하나은행 제공 json 
+```
+http://fx.kebhana.com/FER1101M.web
+```
+
+### 한국수출입은행 json
+
+```
+https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?data=AP01&authkey=보유키생성&searchdate=날짜
+```
+
