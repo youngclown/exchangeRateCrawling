@@ -32,8 +32,6 @@ public class ScheduleCrawling {
   private static final SimpleDateFormat hh = new SimpleDateFormat("HH");
   private static final SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyyMMdd");
   private static final SimpleDateFormat yyyyMMddDot = new SimpleDateFormat("yyyy.MM.dd");
-  private static final String EXCHANGERATE = "EXCHANGERATE";
-  private static final String REDIS_DEPT = ":";
 
   private static final Map<String, String> map = new HashMap<>();
 
