@@ -1,6 +1,9 @@
 package com.bymin.crawling;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,16 +22,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 //@SpringBootApplication
 public class CrawlingApplication {
 
+  private static final Map<String, String> map = new HashMap<>();
   public static void main(String[] args) {
 //    SpringApplication.run(CrawlingApplication.class, args);
+    map.put("JPY", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_JPYKRW");
+    map.put("USD", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW");
+    map.put("EUR", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_EURKRW");
+    map.put("CNH", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_CNYKRW");
 
 
     try {
@@ -49,7 +54,10 @@ public class CrawlingApplication {
 //      while ((line = reader.readLine()) != null) {
 //        System.out.println(line);
 //      }
-      returnDocument("https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_JPYKRW");
+
+      String url = "http://fx.kebhana.com/FER1101M.web";
+//      returnDocument("https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_JPYKRW");
+      returnDocument(url);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -67,16 +75,30 @@ public class CrawlingApplication {
               .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36")
               .ignoreContentType(true).get();
 
+      String buffer = doc.text();
+      buffer = buffer.substring(51);
+      buffer = buffer.substring(0, buffer.length() - 2);
+//      System.out.println(buffer);
 
-      Elements list = doc.getElementsByClass("section_exchange").get(0).getElementsByTag("tr");
+      Gson gson = new Gson();
+      Type userListType = new TypeToken<ArrayList<Kebhana>>() {
+      }.getType();
+      ArrayList<Kebhana> lists = gson.fromJson(buffer, userListType);
 
-      for (Element element : list) {
-        if (element.text().contains(yyyyMMdd.format(new Date()))) { // yyyyMMdd.format(new Date());
-          Elements tdList = element.getElementsByTag("td");
-          System.out.println(tdList.get(6).text().replace(",", ""));
-          break;
-        }
+      for (Kebhana k:
+      lists) {
+        System.out.println(k);
       }
+
+//      Elements list = doc.getElementsByClass("section_exchange").get(0).getElementsByTag("tr");
+//
+//      for (Element element : list) {
+//        if (element.text().contains(yyyyMMdd.format(new Date()))) { // yyyyMMdd.format(new Date());
+//          Elements tdList = element.getElementsByTag("td");
+//          System.out.println(tdList.get(6).text().replace(",", ""));
+//          break;
+//        }
+//      }
 
 //      Gson gson = new Gson();
 //      Type userListType = new TypeToken<ArrayList<ExchangeJSON>>() {

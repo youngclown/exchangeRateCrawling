@@ -19,10 +19,10 @@ import java.util.Map;
 public class ScheduleCrawling {
   private static final Map<String, String> crawlingMap = new HashMap<>();
   public ScheduleCrawling() {
-    crawlingMap.put("JPY", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_JPYKRW");
-    crawlingMap.put("USD", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW");
-    crawlingMap.put("EUR", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_EURKRW");
-    crawlingMap.put("CNH", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_CNYKRW");
+//    crawlingMap.put("JPY", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_JPYKRW");
+//    crawlingMap.put("USD", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW");
+//    crawlingMap.put("EUR", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_EURKRW");
+//    crawlingMap.put("CNH", "http://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_CNYKRW");
   }
 
   private static final SimpleDateFormat hh = new SimpleDateFormat("HH");
@@ -65,7 +65,17 @@ public class ScheduleCrawling {
             break;
           }
         }
+
+        log.info("exchangeRate > {}",exchangeRate);
       }
+
+
+      url = "http://fx.kebhana.com/FER1101M.web";
+      doc = Jsoup.connect(url)
+              .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36")
+              .ignoreContentType(true).get();
+
+      log.info("doc > {}",doc.text());
 
     } catch (Exception e) {
       e.printStackTrace();
